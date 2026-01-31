@@ -67,8 +67,10 @@ echo "--- Running final command in $BACKUP_LOCATION ---"
         git remote add origin "https://github.com/kurian-thomas/omarchy-personal-customization.git"
     fi
 
+    COMMIT_TIMESTAMP=$(date +'%Y-%m-%d_%H:%M:%S')
+
     git add --all
-    git commit -m "backup of dotfiles on $DATE_TAG" || log_msg "[INFO] Nothing to commit"
+    git commit -m "backup of dotfiles on $COMMIT_TIMESTAMP" || log_msg "[INFO] Nothing to commit"
     git push -u origin master
 )
 
