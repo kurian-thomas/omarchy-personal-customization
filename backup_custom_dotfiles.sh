@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-set -e -o pipefail
+set -euo pipefail
 
 # Config files
 HYPRLAND_LOOK_N_FEEL_FILE=$HOME/.config/hypr/looknfeel.conf
