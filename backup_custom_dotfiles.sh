@@ -45,8 +45,8 @@ git_backup() {
         cd "$backup_dir" || { log_msg "[ERROR] Could not change directory to $backup_dir"; exit 1; }
 
         if [ ! -d ".git" ]; then
-            git init
-            git remote add origin "https://github.com/kurian-thomas/omarchy-personal-customization.git"
+            log_msg "[ERROR] git dir not initialized, setup git init on $backup_dir"
+            return
         fi
 
         COMMIT_TIMESTAMP=$(date +'%Y-%m-%d_%H:%M:%S')
