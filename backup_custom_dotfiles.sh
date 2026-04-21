@@ -12,6 +12,9 @@ HYPR_INPUT_FILE=$HOME/.config/hypr/input.conf
 
 BACKUP_LOCATION=$HOME/personal/projects/omarchy-custom/
 
+# nvim backup location
+NVIM_CONFIG=$HOME/.config/nvim/
+
 DOT_FILE_BAK_LOG_DIR="$HOME/logs/dotfiles_backup"
 DATE_TAG=$(date +'%Y-%m-%d')  # Format: YYYY-MM-DD
 LOG_FILE="$DOT_FILE_BAK_LOG_DIR/run_${DATE_TAG}.log"
@@ -83,5 +86,6 @@ for file in "${files[@]}"; do
 done
 
 git_backup "$BACKUP_LOCATION"
+git_backup "$NVIM_CONFIG"
 
 log_msg "[INFO] Backup complete"
