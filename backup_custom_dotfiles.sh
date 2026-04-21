@@ -7,6 +7,7 @@ HYPRLAND_LOOK_N_FEEL_FILE=$HOME/.config/hypr/looknfeel.conf
 HYPRLOCK_FILE=$HOME/.config/hypr/hyprlock.conf
 WALKER_FILE=$HOME/.local/share/omarchy/default/walker/themes/omarchy-default/style.css
 WAYBAR_FILE=$HOME/.config/waybar/style.css
+WAYBAT_CONF=$HOME/.config/waybar/config.jsonc
 HYPR_INPUT_FILE=$HOME/.config/hypr/input.conf
 
 BACKUP_LOCATION=$HOME/personal/projects/omarchy-custom/
