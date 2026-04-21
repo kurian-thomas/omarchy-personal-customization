@@ -22,6 +22,7 @@ files=(
 "$WALKER_FILE"
 "$WAYBAR_FILE"
 "$HYPR_INPUT_FILE"
+"$WAYBAT_CONF"
 )
 
 log_msg() {
