@@ -45,7 +45,7 @@ git_backup() {
         cd "$backup_dir" || { log_msg "[ERROR] Could not change directory to $backup_dir"; exit 1; }
 
         if [ ! -d ".git" ]; then
-            log_msg "[ERROR] git dir not initialized, setup git init on $backup_dir"
+            log_msg "[ERROR] Git dir not initialized or missing, setup git init on $backup_dir"
             return
         fi
 
@@ -53,7 +53,7 @@ git_backup() {
 
         git add --all
         git commit -m "backup of dotfiles on $COMMIT_TIMESTAMP" || log_msg "[INFO] Nothing to commit"
-        git push -u origin master
+        git push -u origin master || log_msg "[ERROR] Push error, validate git branch state in repo $backup_dir"
     )
 }
 
