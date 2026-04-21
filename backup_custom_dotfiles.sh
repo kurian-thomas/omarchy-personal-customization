@@ -32,6 +32,28 @@ log_msg() {
     echo "[$timestamp] $1" | tee -a "$LOG_FILE"
 }
 
+git_backup() {
+    local backup_dir="$1"
+    
+    log_msg "[INFO] Running final git commands in $backup_dir"
+
+    # subshell to run git commands
+    (
+        cd "$backup_dir" || { log_msg "[ERROR] Could not change directory to $backup_dir"; exit 1; }
+
+        if [ ! -d ".git" ]; then
+            git init
+            git remote add origin "https://github.com/kurian-thomas/omarchy-personal-customization.git"
+        fi
+
+        COMMIT_TIMESTAMP=$(date +'%Y-%m-%d_%H:%M:%S')
+
+        git add --all
+        git commit -m "backup of dotfiles on $COMMIT_TIMESTAMP" || log_msg "[INFO] Nothing to commit"
+        git push -u origin master
+    )
+}
+
 error_handler() {
     local line_no=$1
     local command=$2
@@ -60,22 +82,6 @@ for file in "${files[@]}"; do
     fi
 done
 
-echo "--- Running final command in $BACKUP_LOCATION ---"
-
-# subshell to run git commands
-(
-    cd "$BACKUP_LOCATION" || exit
-
-    if [ ! -d ".git" ]; then
-        git init
-        git remote add origin "https://github.com/kurian-thomas/omarchy-personal-customization.git"
-    fi
-
-    COMMIT_TIMESTAMP=$(date +'%Y-%m-%d_%H:%M:%S')
-
-    git add --all
-    git commit -m "backup of dotfiles on $COMMIT_TIMESTAMP" || log_msg "[INFO] Nothing to commit"
-    git push -u origin master
-)
+git_backup "$BACKUP_LOCATION"
 
 log_msg "[INFO] Backup complete"
