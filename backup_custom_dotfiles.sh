@@ -15,6 +15,9 @@ BACKUP_LOCATION=$HOME/personal/projects/omarchy-custom/
 # nvim backup location
 NVIM_CONFIG=$HOME/.config/nvim/
 
+# bashrc backup
+BASH_RC=$HOME/.bashrc
+
 DOT_FILE_BAK_LOG_DIR="$HOME/logs/dotfiles_backup"
 DATE_TAG=$(date +'%Y-%m-%d')  # Format: YYYY-MM-DD
 LOG_FILE="$DOT_FILE_BAK_LOG_DIR/run_${DATE_TAG}.log"
@@ -26,6 +29,7 @@ files=(
 "$WAYBAR_FILE"
 "$HYPR_INPUT_FILE"
 "$WAYBAT_CONF"
+"$BASH_RC"
 )
 
 log_msg() {
