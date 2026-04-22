@@ -16,6 +16,10 @@ BACKUP_LOCATION=$HOME/personal/projects/omarchy-custom/
 # nvim backup location
 NVIM_CONFIG=$HOME/.config/nvim/
 
+# Custom screensaver script
+SCREEN_SAVER_LAUNCH=$HOME/.local/bin/custom_scripts/nova-custom-screensaver
+SCREEN_SAVER_SCRIPT=$HOME/.local/bin/custom_scripts/nova-cmd-screensaver
+
 # bashrc backup
 BASH_RC=$HOME/.bashrc
 
@@ -32,6 +36,8 @@ files=(
 "$WAYBAT_CONF"
 "$BASH_RC"
 "$HYPR_IDLE"
+"$SCREEN_SAVER_LAUNCH"
+"$SCREEN_SAVER_SCRIPT"
 )
 
 log_msg() {
