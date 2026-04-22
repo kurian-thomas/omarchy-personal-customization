@@ -9,6 +9,7 @@ WALKER_FILE=$HOME/.local/share/omarchy/default/walker/themes/omarchy-default/sty
 WAYBAR_FILE=$HOME/.config/waybar/style.css
 WAYBAT_CONF=$HOME/.config/waybar/config.jsonc
 HYPR_INPUT_FILE=$HOME/.config/hypr/input.conf
+HYPR_IDLE=$HOME/.config/hypr/hypridle.conf
 
 BACKUP_LOCATION=$HOME/personal/projects/omarchy-custom/
 
@@ -30,6 +31,7 @@ files=(
 "$HYPR_INPUT_FILE"
 "$WAYBAT_CONF"
 "$BASH_RC"
+"$HYPR_IDLE"
 )
 
 log_msg() {
