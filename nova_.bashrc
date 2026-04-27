@@ -17,6 +17,35 @@ add_to_path() {
     fi
 }
 
+# Git wrapper for fzf interactive commands
+git() {
+    if [ "$1" = "fswitch" ]; then
+        # 1. Fetch branches and open fzf
+        local branch=$(command git branch -a --format="%(refname:short)" | sort -u | fzf --preview "git log --color=always --oneline -10 {}")
+        
+        # 2. If a branch was selected, pre-fill the command line
+        if [ -n "$branch" ]; then
+            # 'read -e -i' pre-fills the text and waits for you to press Enter
+            read -e -i "git switch $branch" -p "$ " cmd
+            history -s "$cmd" # Add it to your up-arrow bash history
+            eval "$cmd"       # Execute the command
+        fi
+
+    elif [ "$1" = "fpush" ]; then
+        local branch=$(command git branch -a --format="%(refname:short)" | sort -u | fzf --preview "git log --color=always --oneline -10 {}")
+        
+        if [ -n "$branch" ]; then
+            read -e -i "git push -u origin $branch" -p "$ " cmd
+            history -s "$cmd"
+            eval "$cmd"
+        fi
+
+    else
+        # Pass all other regular commands (commit, pull, etc.) directly to git
+        command git "$@"
+    fi
+}
+
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
 alias virt-manager='/usr/bin/python3 /usr/bin/virt-manager'
 export PATH="/home/nova/package-downloads/sdk/flutter/bin:$PATH"
@@ -48,6 +77,9 @@ alias gdiff='git diff'
 alias glog='git log --oneline --graph --decorate --all'
 
 alias cat='bat --theme="gruvbox-dark" --style="numbers,changes,header,snip"'
+
+# open vscodium instead of oss code
+alias code="codium"
 
 # Alias cdi to interactive zoxide
 alias cdi='zi'
