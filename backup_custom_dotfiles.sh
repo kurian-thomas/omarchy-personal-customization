@@ -22,6 +22,7 @@ APPLICATION_README=$HOME/Applications/README.md
 # Custom screensaver script
 SCREEN_SAVER_LAUNCH=$HOME/.local/bin/custom_scripts/nova-custom-screensaver
 SCREEN_SAVER_SCRIPT=$HOME/.local/bin/custom_scripts/nova-cmd-screensaver
+S_NPN=$HOME/.local/bin/custom_scripts/s_npm
 
 # bashrc backup
 BASH_RC=$HOME/.bashrc

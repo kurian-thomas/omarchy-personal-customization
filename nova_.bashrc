@@ -17,33 +17,67 @@ add_to_path() {
     fi
 }
 
+build_fzf_git_cmd() {
+  local git_cmd=$1
+  local branch=$2
+
+  if [[ -n "$branch" ]]; then
+    branch="$branch"
+  else
+    branch=$(command git branch -a --format="%(refname:short)" | sort -u | fzf --preview "git log --color=always --oneline -10 {}")
+  fi
+
+  # 2. If a branch was selected, pre-fill the command line
+  if [[ -n "$branch" ]]; then
+      # 'read -e -i' pre-fills the text and waits for you to press Enter
+      read -e -i "$git_cmd $branch" -p "=> $ " cmd
+      history -s "$cmd" # Add it to your up-arrow bash history
+      eval "$cmd"       # Execute the command
+  fi
+}
+
 # Git wrapper for fzf interactive commands
 git() {
-    if [ "$1" = "fswitch" ]; then
-        # 1. Fetch branches and open fzf
-        local branch=$(command git branch -a --format="%(refname:short)" | sort -u | fzf --preview "git log --color=always --oneline -10 {}")
-        
-        # 2. If a branch was selected, pre-fill the command line
-        if [ -n "$branch" ]; then
-            # 'read -e -i' pre-fills the text and waits for you to press Enter
-            read -e -i "git switch $branch" -p "$ " cmd
-            history -s "$cmd" # Add it to your up-arrow bash history
-            eval "$cmd"       # Execute the command
-        fi
+  if [[ "$1" == "fswitch" ]]; then
+    build_fzf_git_cmd "git switch"
 
-    elif [ "$1" = "fpush" ]; then
-        local branch=$(command git branch -a --format="%(refname:short)" | sort -u | fzf --preview "git log --color=always --oneline -10 {}")
-        
-        if [ -n "$branch" ]; then
-            read -e -i "git push -u origin $branch" -p "$ " cmd
-            history -s "$cmd"
-            eval "$cmd"
-        fi
+  elif [[ "$1" == "frebase" ]]; then
+    # local branch=$(command git branch -a --format="%(refname:short)" | sort -u | fzf --preview "git log --color=always --oneline -10 {}")
+    #
+    # if [[ -n "$branch" ]]; then
+    #     read -e -i "git rebase $branch" -p "$ " cmd
+    #     history -s "$cmd"
+    #     eval "$cmd"
+    # fi
+    build_fzf_git_cmd "git rebase"
 
-    else
-        # Pass all other regular commands (commit, pull, etc.) directly to git
-        command git "$@"
-    fi
+  elif [[ "$1" == "fpush" ]]; then
+    # local branch=$(command git branch -a --format="%(refname:short)" | sort -u | fzf --preview "git log --color=always --oneline -10 {}")
+    #
+    # if [[ -n "$branch" ]]; then
+    #     read -e -i "git push -u origin $branch" -p "$ " cmd
+    #     history -s "$cmd"
+    #     eval "$cmd"
+    # fi
+    build_fzf_git_cmd "git push -u origin"
+
+  elif [[ "$1" == "fmerge" ]]; then
+    # local branch=$(command git branch -a --format="%(refname:short)" | sort -u | fzf --preview "git log --color=always --oneline -10 {}")
+    #
+    # if [[ -n "$branch" ]]; then
+    #   read -e -i "git merge $branch" -p "$ " cmd
+    #   history -s "$cmd"
+    #   eval "$cmd"
+    # fi
+    build_fzf_git_cmd "git merge"
+
+  elif [[ "$1" == "ffetch" ]]; then
+    build_fzf_git_cmd "git fetch origin" $2
+
+  else
+      # Pass all other regular commands (commit, pull, etc.) directly to git
+      command git "$@"
+  fi
 }
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
@@ -67,6 +101,10 @@ export CGO_LDFLAGS="-L/usr/local/lib -lrocksdb -lstdc++ -lm -lz -lbz2 -lsnappy -
 add_to_path "$ANDROID_HOME/emulator"
 add_to_path "$ANDROID_HOME/platform-tools"
 add_to_path "$ANDROID_HOME/cmdline-tools/latest/bin"
+
+# custom scripts
+CUSTOM_SCRIPTS="$HOME/.local/bin/custom_scripts"
+add_to_path "$CUSTOM_SCRIPTS"
 
 # Clean up the function so it doesn't linger in your environment
 unset -f add_to_path
