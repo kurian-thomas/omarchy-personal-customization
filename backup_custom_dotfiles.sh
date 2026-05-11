@@ -43,6 +43,7 @@ files=(
 "$SCREEN_SAVER_LAUNCH"
 "$SCREEN_SAVER_SCRIPT"
 "$APPLICATION_README"
+"$S_NPN"
 )
 
 log_msg() {
