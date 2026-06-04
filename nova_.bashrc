@@ -121,3 +121,13 @@ alias code="codium"
 
 # Alias cdi to interactive zoxide
 alias cdi='zi'
+
+# ls with color and grouping of dirs
+alias ls='ls -lah --color=always --group-directories-first'
+
+# safe delete, never delete /
+alias rm='rm -I --preserve-root'
+
+# ask before overwrite
+alias cp='cp -i'
+alias mv='mv -i'
